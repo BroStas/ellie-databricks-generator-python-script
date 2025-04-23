@@ -42,8 +42,8 @@ To avoid this error, keep the "Replace spaces with underscores" option enabled (
 
 1. Clone this repository:
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+git clone https://github.com/BroStas/ellie-databricks-generator-python-script.git
+cd ellie-databricks-generator-python-script
 ```
 
 2. Install the required dependencies:
