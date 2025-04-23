@@ -14,15 +14,11 @@ A Streamlit application that generates DDL (Data Definition Language) statements
 
 ## Identifier Handling
 
-The application provides two methods to handle identifiers (table and column names) that contain spaces or special characters:
+The application provides a methog to handle identifiers (table and column names) that contain spaces or special characters:
 
-1. **Underscore (Recommended for Databricks)**: Replaces spaces and special characters with underscores
+**Underscore (Recommended for Databricks)**: Replaces spaces and special characters with underscores
    - Example: "Address ID" → "Address_ID"
    - This is the safest option for Databricks Delta tables and is enabled by default
-
-2. **Backtick Quoting**: Surrounds identifiers with backticks
-   - Example: "Address ID" → "`Address ID`"
-   - Standard SQL approach but may cause issues with Databricks Delta tables
 
 **Note**: Databricks Delta tables have a limitation that column names cannot contain spaces or special characters, resulting in errors like:
 ```
