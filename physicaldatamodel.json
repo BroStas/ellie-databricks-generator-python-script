@@ -1,0 +1,944 @@
+{
+    "model": {
+      "modelId": 173,
+      "name": "Logistics Hub (SQL Ready)",
+      "description": "",
+      "folderId": 115,
+      "progressStatus": "in-production",
+      "level": "physical",
+      "createdAt": "2024-12-19T08:14:06.249Z",
+      "updatedAt": "2025-03-03T13:47:50.592Z",
+      "entities": [
+        {
+          "id": "91f0601e-bde6-11ef-858c-0242ac170004",
+          "name": "Carrier",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": [
+              {
+                "id": "22f400a0-2e44-4239-8d64-ccbfff3d55f6",
+                "name": "Customer",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              },
+              {
+                "id": "22f400a0-2e44-4239-8d64-ccbfff3d55f6",
+                "name": "Customer",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              }
+            ]
+          },
+          "attributes": [
+            {
+              "id": "91f01956-bde6-11ef-858c-0242ac170004",
+              "name": "carrier_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-03-03T13:47:50.592Z"
+        },
+        {
+          "id": "91f0817a-bde6-11ef-858c-0242ac170004",
+          "name": "Customer",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": [
+              {
+                "id": "137963c0-bdd2-11ef-bfc2-0242ac170004",
+                "name": "Customer",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              },
+              {
+                "id": "137963c0-bdd2-11ef-bfc2-0242ac170004",
+                "name": "Customer",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              },
+              {
+                "id": "137963c0-bdd2-11ef-bfc2-0242ac170004",
+                "name": "Customer",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              }
+            ]
+          },
+          "attributes": [
+            {
+              "id": "91eff7aa-bde6-11ef-858c-0242ac170004",
+              "name": "customer_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:59.026Z"
+        },
+        {
+          "id": "91f074dc-bde6-11ef-858c-0242ac170004",
+          "name": "Delivery",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": []
+          },
+          "attributes": [
+            {
+              "id": "91f0112c-bde6-11ef-858c-0242ac170004",
+              "name": "delivery_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f01712-bde6-11ef-858c-0242ac170004",
+              "name": "customer_id",
+              "order": 1,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f0185c-bde6-11ef-858c-0242ac170004",
+              "name": "transport_vehicle_id",
+              "order": 2,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.620Z"
+        },
+        {
+          "id": "91f07928-bde6-11ef-858c-0242ac170004",
+          "name": "Employee",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": []
+          },
+          "attributes": [
+            {
+              "id": "91f00d12-bde6-11ef-858c-0242ac170004",
+              "name": "employee_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f00e0c-bde6-11ef-858c-0242ac170004",
+              "name": "warehouse_id",
+              "order": 1,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.757Z"
+        },
+        {
+          "id": "91f07716-bde6-11ef-858c-0242ac170004",
+          "name": "Inventory",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": [
+              {
+                "id": "7db17c7a-bdd0-11ef-a322-0242ac170004",
+                "name": "Inventory",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              }
+            ]
+          },
+          "attributes": [
+            {
+              "id": "91f00a1a-bde6-11ef-858c-0242ac170004",
+              "name": "inventory_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f00b1e-bde6-11ef-858c-0242ac170004",
+              "name": "warehouse_id",
+              "order": 1,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f00c18-bde6-11ef-858c-0242ac170004",
+              "name": "product_id",
+              "order": 2,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.687Z"
+        },
+        {
+          "id": "91f07b3a-bde6-11ef-858c-0242ac170004",
+          "name": "Invoice",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": []
+          },
+          "attributes": [
+            {
+              "id": "91f00164-bde6-11ef-858c-0242ac170004",
+              "name": "invoice_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f00268-bde6-11ef-858c-0242ac170004",
+              "name": "order_id",
+              "order": 1,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.826Z"
+        },
+        {
+          "id": "91f0704a-bde6-11ef-858c-0242ac170004",
+          "name": "Order",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": [
+              {
+                "id": "1379c270-bdd2-11ef-bfc2-0242ac170004",
+                "name": "Order",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              }
+            ]
+          },
+          "attributes": [
+            {
+              "id": "91effd0e-bde6-11ef-858c-0242ac170004",
+              "name": "order_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91effe58-bde6-11ef-858c-0242ac170004",
+              "name": "customer_id",
+              "order": 1,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.484Z"
+        },
+        {
+          "id": "91f07d4c-bde6-11ef-858c-0242ac170004",
+          "name": "Order_Product",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": []
+          },
+          "attributes": [
+            {
+              "id": "91eff110-bde6-11ef-858c-0242ac170004",
+              "name": "order_product_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91eff4bc-bde6-11ef-858c-0242ac170004",
+              "name": "order_id",
+              "order": 1,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91eff674-bde6-11ef-858c-0242ac170004",
+              "name": "product_id",
+              "order": 2,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.892Z"
+        },
+        {
+          "id": "91f06e2e-bde6-11ef-858c-0242ac170004",
+          "name": "Product",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": []
+          },
+          "attributes": [
+            {
+              "id": "91f00f1a-bde6-11ef-858c-0242ac170004",
+              "name": "product_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f01014-bde6-11ef-858c-0242ac170004",
+              "name": "supplier_id",
+              "order": 1,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.412Z"
+        },
+        {
+          "id": "91f07f54-bde6-11ef-858c-0242ac170004",
+          "name": "Return",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": [
+              {
+                "id": "f16dd298-bde0-11ef-a3a7-0242ac170004",
+                "name": "Return",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              }
+            ]
+          },
+          "attributes": [
+            {
+              "id": "91efff66-bde6-11ef-858c-0242ac170004",
+              "name": "return_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f0006a-bde6-11ef-858c-0242ac170004",
+              "name": "order_id",
+              "order": 1,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.960Z"
+        },
+        {
+          "id": "91f0727a-bde6-11ef-858c-0242ac170004",
+          "name": "Shipment",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": []
+          },
+          "attributes": [
+            {
+              "id": "91f0039e-bde6-11ef-858c-0242ac170004",
+              "name": "shipment_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f007e0-bde6-11ef-858c-0242ac170004",
+              "name": "carrier_id",
+              "order": 1,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            },
+            {
+              "id": "91f00916-bde6-11ef-858c-0242ac170004",
+              "name": "order_id",
+              "order": 2,
+              "metadata": {
+                "FK": true,
+                "PK": false,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.552Z"
+        },
+        {
+          "id": "91f06708-bde6-11ef-858c-0242ac170004",
+          "name": "Supplier",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": []
+          },
+          "attributes": [
+            {
+              "id": "91f01a50-bde6-11ef-858c-0242ac170004",
+              "name": "supplier_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:57.872Z"
+        },
+        {
+          "id": "91f069a6-bde6-11ef-858c-0242ac170004",
+          "name": "Transport_Vehicle",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": [
+              {
+                "id": "f16dcab4-bde0-11ef-a3a7-0242ac170004",
+                "name": "Transport Vehicle",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              }
+            ]
+          },
+          "attributes": [
+            {
+              "id": "91eff9d0-bde6-11ef-858c-0242ac170004",
+              "name": "transport_vehicle_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:57.908Z"
+        },
+        {
+          "id": "91f06c08-bde6-11ef-858c-0242ac170004",
+          "name": "Warehouse",
+          "folderId": null,
+          "metadata": {
+            "Description": "",
+            "links": [
+              {
+                "id": "7db1ff1a-bdd0-11ef-a322-0242ac170004",
+                "name": "Warehouse",
+                "level": "level-link",
+                "linkedEntityType": "conceptual"
+              }
+            ]
+          },
+          "attributes": [
+            {
+              "id": "91eff8b8-bde6-11ef-858c-0242ac170004",
+              "name": "warehouse_id",
+              "order": 0,
+              "metadata": {
+                "FK": false,
+                "PK": true,
+                "Unique": false,
+                "Default": "",
+                "Not null": false,
+                "Data type": "BIGINT",
+                "Partitioned by": "false",
+                "description": ""
+              },
+              "created_at": "2024-12-19T08:45:33.298804"
+            }
+          ],
+          "createdAt": "2024-12-19T08:45:33.298Z",
+          "updatedAt": "2025-02-26T12:54:58.296Z"
+        }
+      ],
+      "relationships": [
+        {
+          "sourceEntity": {
+            "id": "91f0601e-bde6-11ef-858c-0242ac170004",
+            "name": "Carrier",
+            "startType": "one",
+            "attributeNames": [
+              "carrier_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f0727a-bde6-11ef-858c-0242ac170004",
+            "name": "Shipment",
+            "endType": "many",
+            "attributeNames": [
+              "carrier_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f06708-bde6-11ef-858c-0242ac170004",
+            "name": "Supplier",
+            "startType": "one",
+            "attributeNames": [
+              "supplier_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f06e2e-bde6-11ef-858c-0242ac170004",
+            "name": "Product",
+            "endType": "many",
+            "attributeNames": [
+              "supplier_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f069a6-bde6-11ef-858c-0242ac170004",
+            "name": "Transport_Vehicle",
+            "startType": "one",
+            "attributeNames": [
+              "transport_vehicle_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f074dc-bde6-11ef-858c-0242ac170004",
+            "name": "Delivery",
+            "endType": "many",
+            "attributeNames": [
+              "transport_vehicle_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f06c08-bde6-11ef-858c-0242ac170004",
+            "name": "Warehouse",
+            "startType": "one",
+            "attributeNames": [
+              "warehouse_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f07716-bde6-11ef-858c-0242ac170004",
+            "name": "Inventory",
+            "endType": "many",
+            "attributeNames": [
+              "warehouse_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f06c08-bde6-11ef-858c-0242ac170004",
+            "name": "Warehouse",
+            "startType": "one",
+            "attributeNames": [
+              "warehouse_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f07928-bde6-11ef-858c-0242ac170004",
+            "name": "Employee",
+            "endType": "many",
+            "attributeNames": [
+              "warehouse_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f06e2e-bde6-11ef-858c-0242ac170004",
+            "name": "Product",
+            "startType": "one",
+            "attributeNames": [
+              "product_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f07716-bde6-11ef-858c-0242ac170004",
+            "name": "Inventory",
+            "endType": "many",
+            "attributeNames": [
+              "product_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f06e2e-bde6-11ef-858c-0242ac170004",
+            "name": "Product",
+            "startType": "one",
+            "attributeNames": [
+              "product_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f07d4c-bde6-11ef-858c-0242ac170004",
+            "name": "Order_Product",
+            "endType": "many",
+            "attributeNames": [
+              "product_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f0704a-bde6-11ef-858c-0242ac170004",
+            "name": "Order",
+            "startType": "one",
+            "attributeNames": [
+              "order_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f0727a-bde6-11ef-858c-0242ac170004",
+            "name": "Shipment",
+            "endType": "many",
+            "attributeNames": [
+              "order_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f0704a-bde6-11ef-858c-0242ac170004",
+            "name": "Order",
+            "startType": "one",
+            "attributeNames": [
+              "order_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f07b3a-bde6-11ef-858c-0242ac170004",
+            "name": "Invoice",
+            "endType": "many",
+            "attributeNames": [
+              "order_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f0704a-bde6-11ef-858c-0242ac170004",
+            "name": "Order",
+            "startType": "one",
+            "attributeNames": [
+              "order_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f07d4c-bde6-11ef-858c-0242ac170004",
+            "name": "Order_Product",
+            "endType": "many",
+            "attributeNames": [
+              "order_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f0704a-bde6-11ef-858c-0242ac170004",
+            "name": "Order",
+            "startType": "one",
+            "attributeNames": [
+              "order_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f07f54-bde6-11ef-858c-0242ac170004",
+            "name": "Return",
+            "endType": "many",
+            "attributeNames": [
+              "order_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f0817a-bde6-11ef-858c-0242ac170004",
+            "name": "Customer",
+            "startType": "one",
+            "attributeNames": [
+              "customer_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f0704a-bde6-11ef-858c-0242ac170004",
+            "name": "Order",
+            "endType": "many",
+            "attributeNames": [
+              "customer_id"
+            ]
+          },
+          "description": []
+        },
+        {
+          "sourceEntity": {
+            "id": "91f0817a-bde6-11ef-858c-0242ac170004",
+            "name": "Customer",
+            "startType": "one",
+            "attributeNames": [
+              "customer_id"
+            ]
+          },
+          "targetEntity": {
+            "id": "91f074dc-bde6-11ef-858c-0242ac170004",
+            "name": "Delivery",
+            "endType": "many",
+            "attributeNames": [
+              "customer_id"
+            ]
+          },
+          "description": []
+        }
+      ]
+    }
+  }
