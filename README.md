@@ -2,6 +2,14 @@
 
 A Streamlit application that generates DDL (Data Definition Language) statements for Databricks based on a physical data model JSON. Optimized to handle Databricks-specific constraints and naming conventions.
 
+## Video Demonstration
+
+Watch a quick demonstration of how to use the Databricks DDL Generator:
+
+🎬 [View Video Tutorial](https://screen.studio/share/kuIJzmMO)
+
+This video shows the app in action, including how to import a model from Ellie.ai and generate Databricks-compatible DDL.
+
 ## Features
 
 - Parse physical data model JSON from file or directly from the Ellie.ai API
