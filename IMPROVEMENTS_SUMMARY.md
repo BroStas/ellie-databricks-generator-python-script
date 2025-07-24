@@ -1,272 +1,110 @@
 # Databricks DDL Generator - Improvements Summary
 
-## 📋 Overview
+## Latest Enhancements (2024)
 
-This document summarizes all improvements made to the Databricks DDL Generator based on customer feedback and the feedbackspecs.md requirements.
+### 🔤 Naming Convention Support
+Added comprehensive naming convention support to automatically convert field names when generating DDL statements.
 
-## ✅ Implemented Features
+**Supported Conventions:**
+- **Snake Case** (`user_name`) - Recommended for SQL databases
+- **Kebab Case** (`user-name`) - Automatically converted to snake_case for Databricks compatibility
+- **Camel Case** (`userName`) - Common in programming
+- **Pascal Case** (`UserName`) - Common for class names
+- **Upper Case** (`USER_NAME`) - Common for constants
+- **Lower Case** (`user_name`) - Same as snake_case
+- **Keep Original** - No conversion applied
 
-### F-8: Foreign Key Validation (NEW)
-**Status: ✅ COMPLETED**
-
-- **Smart validation**: Validates FK columns against actual primary key columns
-- **Automatic correction**: Converts invalid composite FKs to valid single-column FKs
-- **Clear messaging**: Provides detailed information about skipped relationships
-- **User control**: Optional toggle to disable validation for legacy compatibility
-- **Databricks compatibility**: Prevents common `[FOREIGN_KEY_COLUMN_MISMATCH]` errors
-
-**Problem Solved:**
-```sql
--- BEFORE (causes Databricks error):
-FOREIGN KEY (PipelineId, PipelineLabel) REFERENCES DealPipelines(Id, Label)
-
--- AFTER (works correctly):
-FOREIGN KEY (PipelineId) REFERENCES DealPipelines(Id)
+**Example Conversions:**
+```
+"Customer ID"   → snake_case  → "customer_id"
+"orderDate"     → kebab_case  → "order-date" (→ "order_date" in DDL)
+"ProductName"   → camelCase   → "productName"
+"user_profile"  → PascalCase  → "UserProfile"
+"EMPLOYEE-DATA" → UPPER_CASE  → "EMPLOYEE_DATA"
 ```
 
-### F-9: Unique Foreign Key Constraint Names (BUG FIX)
-**Status: ✅ COMPLETED**
+### 🔗 Comma Formatting Options
+Added support for both trailing and leading comma formatting in DDL statements.
 
-- **Unique naming**: Includes target attribute names in constraint names
-- **Conflict prevention**: Eliminates `[DELTA_CONSTRAINT_ALREADY_EXISTS]` errors
-- **Descriptive names**: More meaningful constraint identifiers
-- **Backward compatibility**: Maintains support for custom naming
-
-**Problem Solved:**
+**Trailing Commas (Default):**
 ```sql
--- BEFORE (duplicate constraint names):
-ALTER TABLE ContactPipelineStages ADD CONSTRAINT fk_contactpipelinestages_ticketpipelines 
-FOREIGN KEY (PipelineLabel) REFERENCES TicketPipelines(Id);
-ALTER TABLE ContactPipelineStages ADD CONSTRAINT fk_contactpipelinestages_ticketpipelines 
-FOREIGN KEY (PipelineId) REFERENCES TicketPipelines(Id);
-
--- AFTER (unique constraint names):
-ALTER TABLE ContactPipelineStages ADD CONSTRAINT fk_contactpipelinestages_pipelinelabel_ticketpipelines 
-FOREIGN KEY (PipelineLabel) REFERENCES TicketPipelines(Id);
-ALTER TABLE ContactPipelineStages ADD CONSTRAINT fk_contactpipelinestages_pipelineid_ticketpipelines 
-FOREIGN KEY (PipelineId) REFERENCES TicketPipelines(Id);
-```
-
-### F-1: Data Type Mapping Engine
-**Status: ✅ COMPLETED**
-
-- **Enhanced mapping table**: Comprehensive `DATABRICKS_TYPE_MAPPING` dictionary with 25+ type mappings
-- **Key customer issue resolved**: `BIT` → `BOOLEAN` mapping (addresses customer feedback about BIT datatypes)
-- **Advanced pattern matching**: Handles `VARCHAR(n)`, `DECIMAL(p,s)`, `NUMERIC(p,s)` with regex
-- **Extensible design**: Easy to add new mappings to the dictionary
-- **Unit tested**: All mappings verified in test suite
-
-**Key Mappings Added:**
-```python
-'BIT': 'BOOLEAN',           # Customer feedback issue
-'MONEY': 'DECIMAL(19,4)',   # Financial data
-'DATETIME2': 'TIMESTAMP',   # SQL Server types
-'UNIQUEIDENTIFIER': 'STRING', # GUID types
-'TIME': 'STRING',           # No TIME type in Databricks
-```
-
-### F-2: "Handle Non-Compatible Data Types" Toggle
-**Status: ✅ COMPLETED**
-
-- **UI checkbox**: "Handle non-compatible data types" with default enabled
-- **Conditional mapping**: When disabled, original types are preserved
-- **User guidance**: Help text explains the feature
-- **Expandable reference**: View all supported mappings in collapsible section
-- **Visual feedback**: Shows common mappings with descriptions
-
-### F-3: Inline Primary Key Constraints
-**Status: ✅ COMPLETED**
-
-- **Modern DDL syntax**: Primary keys now inline with `CREATE TABLE`
-- **Eliminated ALTER TABLE**: No more separate PK statements
-- **Proper formatting**: Constraints aligned and formatted correctly
-- **Custom naming support**: Override default constraint names
-- **Backward compatibility**: Option still available to include/exclude PKs
-
-**Before:**
-```sql
-CREATE TABLE Customer (
-  customer_id BIGINT NOT NULL
-);
-ALTER TABLE Customer ADD CONSTRAINT pk_customer PRIMARY KEY (customer_id);
-```
-
-**After:**
-```sql
-CREATE TABLE Customer (
+CREATE TABLE customer (
   customer_id BIGINT NOT NULL,
-  CONSTRAINT pk_customer PRIMARY KEY (customer_id)
+  customer_name STRING,
+  email STRING,
+  created_date TIMESTAMP
 );
 ```
 
-### F-4: Identity Column Support
-**Status: ✅ COMPLETED**
-
-- **Auto-detection**: Recognizes multiple identity indicators in metadata
-- **Flexible syntax**: Supports both `GENERATED BY DEFAULT` and `GENERATED ALWAYS`
-- **Type validation**: Only applies to numeric types (INT, BIGINT, SMALLINT, TINYINT)
-- **Description parsing**: Detects keywords in attribute descriptions
-- **Info tooltip**: Comprehensive documentation of supported parameters
-
-**Supported Indicators:**
-- `identity: true`
-- `generated_always: true`
-- `auto_increment: true`
-- `serial: true`
-- Keywords in descriptions: "identity", "auto increment", "serial"
-
-**Generated Syntax:**
+**Leading Commas:**
 ```sql
-customer_id BIGINT GENERATED BY DEFAULT AS IDENTITY NOT NULL
+CREATE TABLE customer (
+  customer_id BIGINT NOT NULL
+  , customer_name STRING
+  , email STRING
+  , created_date TIMESTAMP
+);
 ```
 
-### F-5: Fully Qualified Names
-**Status: ✅ COMPLETED**
+### 🎛️ New UI Controls
 
-- **Catalog and Schema inputs**: Optional text fields in UI
-- **Automatic prefixing**: Tables created as `catalog.schema.table_name`
-- **Live preview**: Shows example table names as user types
-- **Consistent application**: Used in all DDL statements and validation queries
-- **Proper sanitization**: Catalog and schema names sanitized for special characters
-- **Dot handling**: Automatically converts dots to underscores (e.g., `crm.sales` → `crm_sales`) to prevent Databricks `[SCHEMA_NOT_FOUND]` errors
+**Naming Convention Section:**
+- Dropdown selector with descriptive labels
+- Live example conversions showing how field names will be transformed
+- Special warning for kebab-case about Databricks compatibility
 
-**Example Output:**
+**Comma Formatting Section:**
+- Radio button selection between trailing and leading commas
+- Live preview showing how the DDL will be formatted
+- Expandable example showing the actual SQL output
+
+### 🚀 Technical Implementation
+
+**Key Functions Added:**
+- `convert_naming_convention()` - Handles all naming convention transformations
+- `format_comma_separated_list()` - Formats column lists with chosen comma style
+- Enhanced `sanitize_identifier()` - Now includes naming convention parameter
+
+**Features:**
+- Intelligent word boundary detection (handles camelCase, PascalCase, separators)
+- Databricks compatibility (hyphens converted to underscores)
+- Consistent formatting across all DDL elements (tables, columns, constraints)
+- Maintains alignment and readability in generated DDL
+
+### 🔧 Usage Examples
+
+**Before (Original):**
 ```sql
-CREATE TABLE IF NOT EXISTS env_catalog.sales.Customer (...)
-ALTER TABLE env_catalog.sales.Order ADD CONSTRAINT fk_order_customer 
-FOREIGN KEY (customer_id) REFERENCES env_catalog.sales.Customer(customer_id);
+CREATE TABLE "Customer Order" (
+  "Customer ID" BIGINT NOT NULL,
+  "orderDate" TIMESTAMP,
+  "ProductName" STRING
+);
 ```
 
-### F-6: Relationship & Constraint Naming
-**Status: ✅ COMPLETED**
-
-- **Custom PK names**: Override default primary key constraint names
-- **Custom FK names**: Override default foreign key constraint names
-- **Simple format**: `table_name=constraint_name` for PKs, `target_table_source_table=constraint_name` for FKs
-- **Session persistence**: Names stored in Streamlit session state
-- **Visual feedback**: Success/error messages for name validation
-- **Collision prevention**: Multiple FKs between same tables supported
-
-**UI Features:**
-- Expandable "Custom Constraint Names" section
-- Real-time validation and feedback
-- Clear format instructions and examples
-- Session-based storage for user convenience
-
-### F-7: Output Formatting & Syntax Highlighting
-**Status: ✅ COMPLETED**
-
-- **Column alignment**: Fixed-width formatting for readability
-- **Dynamic width calculation**: Automatically adjusts to longest names/types
-- **Consistent spacing**: Professional appearance matching customer expectations
-- **Enhanced relationship format**: `Table Customer customer_id (PK) - Order customer_id (FK)`
-- **Proper indentation**: All DDL elements properly aligned
-
-**Formatting Features:**
-- Column names padded to consistent width
-- Data types aligned in columns
-- Comments properly positioned
-- Identity clauses correctly placed
-- Constraint definitions aligned
-
-## 🎨 UI/UX Improvements
-
-### Enhanced Interface Design
-- **Organized sections**: Logical grouping with emoji icons and clear headings
-- **Better tooltips**: Comprehensive help text for all options
-- **Visual hierarchy**: Clear separation between different option categories
-- **Expandable sections**: Advanced options in collapsible areas
-- **Progress indicators**: Visual feedback for user actions
-
-### Improved User Experience
-- **Data type reference**: Built-in mapping table for user reference
-- **Live previews**: Real-time feedback for fully qualified names
-- **Session persistence**: User preferences maintained during session
-- **Error handling**: Clear error messages and validation feedback
-- **Sample data**: Enhanced sample with more comprehensive examples
-
-## 🧪 Testing & Validation
-
-### Comprehensive Test Suite
-- **Core function tests**: `test_core_functions.py` validates all improvements
-- **Data type mapping**: Verifies all 25+ type mappings including BIT→BOOLEAN
-- **Identity column support**: Tests all identity indicators and edge cases
-- **Column formatting**: Validates alignment and spacing
-- **Identifier sanitization**: Tests space and special character handling
-
-### Test Results
-```
-🎯 Overall Test Result: ✅ ALL TESTS PASSED
+**After (Snake Case + Leading Commas):**
+```sql
+CREATE TABLE customer_order (
+  customer_id BIGINT NOT NULL
+  , order_date TIMESTAMP
+  , product_name STRING
+);
 ```
 
-All core functions verified working correctly:
-- ✅ Data type mapping (including BIT → BOOLEAN)
-- ✅ Identity column support
-- ✅ Column formatting and alignment
-- ✅ Identifier sanitization
+### 🎯 Benefits
 
-## 📊 Customer Feedback Addressed
+1. **Consistency** - Enforces consistent naming across all database objects
+2. **Compatibility** - Ensures Databricks-compatible identifiers
+3. **Flexibility** - Supports various naming conventions for different teams/standards
+4. **Readability** - Comma formatting options improve DDL readability
+5. **Automation** - No manual name conversion required
 
-### Original Issues Resolved
+### 📝 Configuration Options
 
-1. **BIT datatype issue**: ✅ BIT now maps to BOOLEAN automatically
-2. **Inline primary keys**: ✅ PKs now included in CREATE TABLE statements
-3. **Identity columns**: ✅ GENERATED BY DEFAULT AS IDENTITY support added
-4. **Fully qualified names**: ✅ Catalog.schema.table format supported
-5. **Syntax highlighting**: ✅ Improved formatting and alignment
-6. **Relationship naming**: ✅ Custom constraint names supported
-7. **Enhanced formatting**: ✅ Professional column alignment implemented
-8. **UI improvements**: ✅ Better organization and visual design
+The new features integrate seamlessly with existing options:
+- Works with all existing DDL generation options
+- Compatible with catalog/schema naming
+- Maintains constraint naming conventions
+- Preserves comment formatting
 
-### Enhanced Relationship Format
-**Before:** `-- Foreign Key Relationship: Order.customer_id references Customer.customer_id`
-**After:** `-- Table Customer customer_id (PK) - Order customer_id (FK)`
-
-## 🚀 Technical Implementation
-
-### Architecture Improvements
-- **Modular functions**: Separated concerns for better maintainability
-- **Type safety**: Comprehensive type hints throughout codebase
-- **Error handling**: Robust error handling and user feedback
-- **Performance**: Efficient algorithms for formatting and processing
-- **Extensibility**: Easy to add new features and mappings
-
-### Code Quality
-- **Documentation**: Comprehensive docstrings for all functions
-- **Testing**: Unit tests for all core functionality
-- **Validation**: Input validation and sanitization
-- **Standards**: Consistent coding style and patterns
-
-## 📈 Impact & Benefits
-
-### For Users
-- **Reduced manual editing**: DDL now executes in Databricks without modifications
-- **Better readability**: Professional formatting improves maintainability
-- **Flexible configuration**: Comprehensive options for different use cases
-- **Time savings**: Automated type mapping eliminates manual conversions
-- **Better documentation**: Enhanced relationship descriptions and comments
-
-### For Development
-- **Maintainable codebase**: Well-structured and documented code
-- **Extensible design**: Easy to add new features and mappings
-- **Comprehensive testing**: Reliable functionality with test coverage
-- **User feedback integration**: Direct response to customer needs
-
-## 🔮 Future Enhancements
-
-### Potential Improvements
-1. **Additional type mappings**: Support for more database-specific types
-2. **Export formats**: YAML, JSON, or other output formats
-3. **Validation features**: More comprehensive data integrity checks
-4. **UI themes**: Dark mode and other visual themes
-5. **Batch processing**: Support for multiple models at once
-
-### Integration Opportunities
-1. **Ellie.ai integration**: Direct integration into Ellie.ai interface
-2. **CI/CD integration**: Command-line interface for automated workflows
-3. **Version control**: Git integration for DDL versioning
-4. **Collaboration**: Multi-user features and sharing capabilities
-
----
-
-**Summary**: All feedback specifications (F-1 through F-7) have been successfully implemented with comprehensive testing and documentation. The application now provides a professional, feature-rich experience that addresses all customer concerns and requirements. 
+These enhancements make the Databricks DDL Generator more flexible and suitable for teams with different naming standards while ensuring Databricks compatibility. 
