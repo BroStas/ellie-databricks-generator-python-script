@@ -24,7 +24,7 @@ Added comprehensive naming convention support to automatically convert field nam
 ```
 
 ### 🔗 Comma Formatting Options
-Added support for both trailing and leading comma formatting in DDL statements.
+Added support for three different comma formatting styles in DDL statements.
 
 **Trailing Commas (Default):**
 ```sql
@@ -36,13 +36,23 @@ CREATE TABLE customer (
 );
 ```
 
-**Leading Commas:**
+**Leading Commas (with space):**
 ```sql
 CREATE TABLE customer (
-  customer_id BIGINT NOT NULL
+    customer_id BIGINT NOT NULL
   , customer_name STRING
   , email STRING
   , created_date TIMESTAMP
+);
+```
+
+**Leading Commas (no space):**
+```sql
+CREATE TABLE customer (
+   customer_id BIGINT NOT NULL
+  ,customer_name STRING
+  ,email STRING
+  ,created_date TIMESTAMP
 );
 ```
 
@@ -54,9 +64,10 @@ CREATE TABLE customer (
 - Special warning for kebab-case about Databricks compatibility
 
 **Comma Formatting Section:**
-- Radio button selection between trailing and leading commas
+- Dropdown selection between three comma formats (trailing, leading with space, leading without space)
 - Live preview showing how the DDL will be formatted
-- Expandable example showing the actual SQL output
+- Expandable comparison view showing all three formatting styles
+- Checkbox to show all comma format examples side by side
 
 ### 🚀 Technical Implementation
 

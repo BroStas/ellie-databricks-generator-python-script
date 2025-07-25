@@ -82,7 +82,8 @@ NAMING_CONVENTIONS = {
 # Comma formatting options
 COMMA_FORMATS = {
     'trailing': 'Trailing Commas (column1,\\n  column2)',
-    'leading': 'Leading Commas (column1\\n  , column2)'
+    'leading': 'Leading Commas (column1\\n  , column2)',
+    'leading_no_space': 'Leading Commas No Space (column1\\n  ,column2)'
 }
 
 def convert_naming_convention(name: str, convention: str) -> str:
@@ -159,6 +160,19 @@ def format_comma_separated_list(items: List[str], comma_format: str, indent: str
             else:
                 # Subsequent items: comma + space + content
                 formatted.append(f"{indent}, {stripped_item}")
+        return "\n".join(formatted)
+    elif comma_format == 'leading_no_space':
+        # Leading commas without space: all items should align at the same column position
+        # First item gets one extra space to align with comma (no space) of subsequent items
+        formatted = []
+        for i, item in enumerate(items):
+            stripped_item = item.lstrip()
+            if i == 0:
+                # First item: add one extra space to align with subsequent comma (no space)
+                formatted.append(f"{indent} {stripped_item}")
+            else:
+                # Subsequent items: comma (no space) + content
+                formatted.append(f"{indent},{stripped_item}")
         return "\n".join(formatted)
     else:
         # Trailing commas (default): items end with comma except last
@@ -482,6 +496,8 @@ def generate_ddl(model_data: Dict[str, Any], include_options: Dict[str, bool]) -
             # Add the constraint with appropriate comma formatting
             if comma_format == 'leading':
                 table_stmt += f"\n  , {constraint_def.lstrip()}"
+            elif comma_format == 'leading_no_space':
+                table_stmt += f"\n  ,{constraint_def.lstrip()}"
             else:
                 table_stmt += f",\n{constraint_def}"
         
@@ -1150,6 +1166,15 @@ def main():
         formatted_example = format_comma_separated_list(example_columns, selected_comma_format)
         with st.expander("📋 Preview Comma Format"):
             st.code(f"CREATE TABLE example (\n{formatted_example}\n);", language="sql")
+            
+            # Show comparison of all formats
+            if st.checkbox("Show all comma format examples", key="show_all_formats"):
+                st.markdown("**Comparison of all comma formats:**")
+                
+                for format_key, format_name in COMMA_FORMATS.items():
+                    st.markdown(f"**{format_name}:**")
+                    comparison_example = format_comma_separated_list(example_columns, format_key)
+                    st.code(f"CREATE TABLE example (\n{comparison_example}\n);", language="sql")
         
         options["include_comments"] = st.checkbox("Include comments", value=True, help="Add comments for tables and columns")
         options["add_clustering"] = st.checkbox("Add clustering", value=False, help="Add CLUSTERED BY clause on primary key for performance")
